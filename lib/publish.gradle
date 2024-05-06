@@ -1,0 +1,44 @@
+apply plugin: 'maven-publish'
+
+def getGroupId = 'com.jedev'
+def getArtifactId = "paginationfast"
+def getVersionName = "1.0.0"
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId getGroupId
+                artifactId getArtifactId
+                version getVersionName
+            }
+        }
+
+        repositories {
+            mavenLocal()
+            maven {
+                def githubProperties = new Properties()
+                if (file('github.properties').exists()) {
+                    githubProperties.load(new FileInputStream(file('github.properties')))
+                }
+
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/joaoeudes7/Countries")
+                credentials {
+                    username = githubProperties['GITHUB_USERNAME'] ?: System.getenv("GITHUB_USERNAME")
+                    password = githubProperties['GITHUB_TOKEN'] ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+    }
+}
+
+tasks.register("publishLocal") {
+    dependsOn tasks.publishToMavenLocal
+}
+
+tasks.register("publishRelease") {
+    dependsOn tasks.publish
+}
