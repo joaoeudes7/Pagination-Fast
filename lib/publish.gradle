@@ -25,7 +25,7 @@ afterEvaluate {
                 }
 
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/joaoeudes7/Countries")
+                url = uri("https://maven.pkg.github.com/joaoeudes7/Pagination-Fast")
                 credentials {
                     username = githubProperties['GITHUB_USERNAME'] ?: System.getenv("GITHUB_USERNAME")
                     password = githubProperties['GITHUB_TOKEN'] ?: System.getenv("GITHUB_TOKEN")
