@@ -10,7 +10,7 @@ publishing {
             from(components.findByName("release"))
             groupId = "com.github.joaoeudes7"
             artifactId = "paginationfast"
-            version = "1.0.0"
+            version = "1.0.1"
         }
     }
 
