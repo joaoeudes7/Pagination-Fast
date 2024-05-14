@@ -27,7 +27,7 @@ To integrate PaginationFast into your Android project, follow these steps:
 
     ```groovy
     dependencies {
-        implementation 'com.github.joaoeudes7:PaginationFast:Tag'
+        implementation 'com.github.joaoeudes7:paginationfast:Tag'
     }
     ```
 
@@ -39,39 +39,55 @@ To integrate PaginationFast into your Android project, follow these steps:
 
 To use PaginationFast in your app, follow these steps:
 
-1. Create a `PagingSource` by extending `PaginationFast.GenericPagingSource` and implement the `onFetchData` lambda function to fetch data from your backend.
+1. Create a `PagingSource` by `GenericPagingSource` and implement the `onFetchData` lambda function to fetch data from your backend.
 
     ```kotlin
-    val pagingSource = PaginationFast.GenericPagingSource<MyData>(
-        pageSizeItems = 10,
-        enablePlaceholders = false
-    ) { paginationReq ->
-        // Fetch data from your backend using paginationReq
-        // Return PaginatedItemsModel containing the fetched data
-    }
+         @Suppress("MemberVisibilityCanBePrivate", "unused")
+         class ViewModelExample(
+            private val useCase: ExamplePaginationUseCase
+         ) : ViewModel() {
+            var itemsPagination by mutableStateOf(flowOf(PagingData.empty<Any>()))
+            private set
+            
+             fun fetchData() = viewModelScope.launch {
+                 useCase(search = null)
+                     .catch {
+                         // handle exception
+                     }
+                     .collect {
+                         itemsPagination = it.cachedIn(viewModelScope)
+                     }
+             }
+         }
+         
+         @Suppress("unused")
+         class ExamplePaginationUseCase {
+            @VisibleForTesting
+            fun getPagingSource(search: String?) = GenericPagingSource(
+               enablePlaceholders = false,
+               itemPerPage = 20,
+               defaultFirstPage = 1,
+               onFetchData = { fakeFetchFromRepository(search, it.page, it.itemsPerPage) }
+            )
+            
+             operator fun invoke(search: String?) = flow {
+                 val pagingSource = getPagingSource(search)
+         
+                 emit(pagingSource.getPagingDataFlow())
+             }
+         }
+            
+         @Suppress("UNUSED_PARAMETER")
+         fun fakeFetchFromRepository(search: String?, pag: Int, itemsPerPage: Int): PaginationItems<Any> {
+            return PaginationItems(
+               items = listOf(),
+               pagination = PaginationRes(
+                  totalItems = 1,
+                  totalPages = 1
+                )
+            )
+         }
     ```
-
-2. Generate a `Flow` of `PagingData` using the `generatePagingDataFlow` extension function.
-
-    ```kotlin
-    val pagingDataFlow = pagingSource.generatePagingDataFlow(
-        pageSizeItems = 10,
-        enablePlaceholders = false
-    )
-    ```
-
-3. Use the generated `Flow` to observe the paginated data in your UI.
-
-    ```kotlin
-    lifecycleScope.launch {
-        pagingDataFlow.collectLatest { pagingData ->
-            // Update your UI with the paginated data
-        }
-    }
-    ```
-
-For more detailed usage instructions and examples, refer to the [Wiki](https://github.com/joaoeudes7/PaginationFast/wiki).
-
 ## License
 
 This library is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
