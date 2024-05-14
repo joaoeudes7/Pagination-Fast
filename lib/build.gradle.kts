@@ -1,9 +1,23 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    `maven-publish`
 }
 
-apply(from = "publish.gradle.kts")
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            from(components.findByName("release"))
+            groupId = "com.github.joaoeudes7"
+            artifactId = "paginationfast"
+            version = "1.0.0"
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
 
 android {
     namespace = "com.jedev.paginationfast"
