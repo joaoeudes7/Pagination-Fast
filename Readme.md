@@ -27,7 +27,7 @@ To integrate PaginationFast into your Android project, follow these steps:
 
     ```groovy
     dependencies {
-        implementation 'com.github.YourUsername:PaginationFast:Tag'
+        implementation 'com.github.joaoeudes7:PaginationFast:Tag'
     }
     ```
 
