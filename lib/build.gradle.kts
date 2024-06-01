@@ -52,7 +52,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
 
     // Pagination
-    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
-    implementation("androidx.paging:paging-compose:3.3.0-rc01")
+    implementation("androidx.paging:paging-runtime-ktx:3.3.0")
+    implementation("androidx.paging:paging-compose:3.3.0")
 
 }
