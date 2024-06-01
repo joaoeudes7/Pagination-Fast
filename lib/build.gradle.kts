@@ -2,20 +2,36 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     `maven-publish`
+    `ivy-publish`
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("release") {
-            from(components.findByName("release"))
-            groupId = "com.github.joaoeudes7"
-            artifactId = "paginationfast"
-            version = "1.0.2"
-        }
-    }
+afterEvaluate {
+    publishing {
+        publications {
+            val organizationGroup = "com.github.joaoeudes7"
+            val artifactIdPkg = "pagination-fast"
+            val versionPkg = "1.0.3"
 
-    repositories {
-        mavenLocal()
+            create<MavenPublication>("maven") {
+                groupId = organizationGroup
+                artifactId = artifactIdPkg
+                version = versionPkg
+
+                from(components.findByName("release"))
+            }
+
+            create<IvyPublication>("ivy") {
+                organisation = organizationGroup
+                module = artifactIdPkg
+                revision = versionPkg
+
+                from(components.findByName("release"))
+            }
+        }
+
+        repositories {
+            mavenLocal()
+        }
     }
 }
 
