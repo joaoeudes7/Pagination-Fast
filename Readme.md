@@ -1,5 +1,7 @@
 # PaginationFast
 
+[![](https://jitpack.io/v/joaoeudes7/Pagination-Fast.svg)](https://jitpack.io/#joaoeudes7/Pagination-Fast)
+
 PaginationFast is a utility library for Android that provides a fast and generic solution for pagination using the Paging 3 library. It simplifies the process of implementing pagination in your Android app by abstracting away the complexity of managing data loading and pagination.
 
 ## Features
@@ -13,7 +15,6 @@ PaginationFast is a utility library for Android that provides a fast and generic
 To integrate PaginationFast into your Android project, follow these steps:
 
 1. Add the JitPack repository to your project's `build.gradle` file:
-
     ```groovy
     allprojects {
         repositories {
@@ -24,7 +25,7 @@ To integrate PaginationFast into your Android project, follow these steps:
     ```
 
 2. Add the dependency to your app's `build.gradle` file:
-
+    
     ```groovy
     dependencies {
         implementation("com.github.joaoeudes7:Pagination-Fast:Tag")
