@@ -42,7 +42,6 @@ To use PaginationFast in your app, follow these steps:
 1. Create a `PagingSource` by `GenericPagingSource` and implement the `onFetchData` lambda function to fetch data from your backend.
 
     ```kotlin
-         @Suppress("MemberVisibilityCanBePrivate", "unused")
          class ViewModelExample(
             private val useCase: ExamplePaginationUseCase
          ) : ViewModel() {
@@ -60,7 +59,6 @@ To use PaginationFast in your app, follow these steps:
              }
          }
          
-         @Suppress("unused")
          class ExamplePaginationUseCase {
             @VisibleForTesting
             fun getPagingSource(search: String?) = GenericPagingSource(
@@ -77,7 +75,6 @@ To use PaginationFast in your app, follow these steps:
              }
          }
             
-         @Suppress("UNUSED_PARAMETER")
          fun fakeFetchFromRepository(search: String?, pag: Int, itemsPerPage: Int): PaginationItems<Any> {
             return PaginationItems(
                items = listOf(),
